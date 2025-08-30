@@ -1,0 +1,17 @@
+{
+    "title": "{file}",
+    "date": "08/28/25",
+    "type": "Entry",
+    "brief": ["Completed the basic work on our drivetrain"],
+    "elements": [
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "Start",
+                    "src": "resources/{class}/{type}/{title}/IMG_6133.JPG"
+                }
+            ]
+        }
+    ]
+}
