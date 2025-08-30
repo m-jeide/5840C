@@ -195,16 +195,16 @@
           const img = `<img class="image-frame" src="${src}" alt="${alt}" loading="lazy">`;
           const text = `<div class="image-desc">${richText(desc)}</div>`;
           return `<figure class="media media-described ${alignClass}">
-                    <div class="media-wrap">${img}${text}</div>
                     <figcaption class="media-caption">${label}</figcaption>
+                    <div class="media-wrap">${img}${text}</div>
                   </figure>`;
         }
 
         // no description: render as before
         const img = `<img class="image-frame" src="${src}" alt="${alt}" loading="lazy">`;
         return `<figure class="media">
-                  <div class="media-center">${img}</div>
                   <figcaption class="media-caption">${label}</figcaption>
+                  <div class="media-center">${img}</div>
                 </figure>`;
       }).join("");
       return section(el.label || "Image", content);
