@@ -49,6 +49,16 @@
 /* Centered media wrappers */
 .media { margin: 12px 0; display: flex; flex-direction: column; align-items: center }
 .media-caption { text-align: center; color: var(--muted); font-size: .95rem; margin-top: 6px }
+/* Described images: use wider wrap and side-aware caption */
+.media.media-described { margin-top: 4px; }
+.media.media-described .media-wrap {
+  width: clamp(var(--media-w-min), var(--media-w-vw), var(--img-w-max));
+}
+.media.media-described .media-caption {
+  width: clamp(var(--media-w-min), var(--media-w-vw), var(--img-w-max));
+}
+.media.media-described.align-left .media-caption { align-self: flex-start; text-align: left; }
+.media.media-described.align-right .media-caption { align-self: flex-end;   text-align: right; }
 .media-actions { text-align: center; margin-top: 10px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap }
 
 /* Buttons used in actions */
@@ -113,6 +123,8 @@
   object-fit: contain;
   display: block;
 }
+/* No-description images: remove border to avoid oversized box */
+.media:not(.media-described) .image-frame { border: 0; }
 
 /* Flatten cards on detail pages */
 .card, .tile { box-shadow: none }
