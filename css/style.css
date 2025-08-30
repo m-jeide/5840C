@@ -157,8 +157,8 @@ ul.brief li { margin:.2rem 0 }
 
 /* Image descriptions with text wrap */
 .media-described .media-wrap { overflow: auto; }
-/* Make described images larger (same container width as abstract section) */
-.media-described .image-frame { width: 60%; height: auto; max-height: 520px; object-fit: cover; }
+/* Described images: rely on intrinsic aspect ratio (no forced height) */
+.media-described .image-frame { width: 60%; height: auto; }
 .media-described.align-left .image-frame { float: left; margin: 6px 16px 10px 0; }
 .media-described.align-right .image-frame { float: right; margin: 6px 0 10px 16px; }
 .media-described .image-desc { color: var(--text); }
