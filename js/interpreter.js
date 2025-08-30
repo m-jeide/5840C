@@ -88,7 +88,7 @@
     const title = tpl(rawTitle, { file: fileBase, class: parentDir, id: idStr });
 
     // set browser tab title
-    document.title = `${title} · Matthew's Engineering Portfolio`;
+    document.title = `${title} · Vex 5840C`;
 
     // chips
     const chips = [
