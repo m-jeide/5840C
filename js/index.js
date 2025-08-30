@@ -1,6 +1,6 @@
 (function () {
   const BASE = normalizeBase(window.SITE_BASE || "/");
-  const CLASSES = Array.isArray(window.CLASSES) && window.CLASSES.length ? window.CLASSES : ["DE","CIM","EDD"];
+  const CLASSES = Array.isArray(window.CLASSES) && window.CLASSES.length ? window.CLASSES : [];
 
   const q = document.getElementById("q");
   const sel = document.getElementById("cls");
