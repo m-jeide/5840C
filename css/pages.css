@@ -126,6 +126,22 @@
 /* No-description images: remove border to avoid oversized box */
 .media:not(.media-described) .image-frame { border: 0; }
 
+/* Code/script viewer */
+pre.code-window {
+  width: clamp(var(--media-w-min), var(--media-w-vw), var(--img-w-max));
+  max-height: 70vh;
+  overflow: auto;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--hair);
+  border-radius: 12px;
+  background: #0b0e14;
+  color: #e7e9ee;
+  font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  tab-size: 2;
+  white-space: pre;
+}
+
 /* Flatten cards on detail pages */
 .card, .tile { box-shadow: none }
 .tile, .lane { background: transparent; border: none }

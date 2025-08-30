@@ -27,6 +27,16 @@
                     "description": "This is the finished drivetrain we had done at the end of the meeting."
                 }
             ]
+        },
+        {
+            "type": "Script",
+            "items": [
+                {
+                    "label": "Robot Code 8/28/25",
+                    "src": "resources/{class}/{type}/{title}/main.py",
+                    "language": "python"
+                }
+            ]
         }
     ]
 }

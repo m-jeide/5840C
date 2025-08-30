@@ -118,6 +118,9 @@
 
     // mount
     app.innerHTML = header + abstractHtml + elementsHtml;
+    // hydrate any dynamic pieces (code blocks, etc.)
+    hydrateCodeBlocks(app);
+    wireCodeActions(app);
   }
 
   function renderElements(elements, ctx, page) {
@@ -179,6 +182,37 @@
       return section(el.label || "Video", content);
     },
 
+    // Script/code viewer with copy + download
+    script: (el, ctx, i, page) => {
+      const items = normalizeItems(el);
+      const content = items.map((it, k) => {
+        const src = it.code ? null : makeSrc(it.src, page, ctx);
+        const label = escapeHtml(it.label || it.language || "Script");
+        const lang  = escapeHtml(it.language || guessLang(it.src || ""));
+        const codeId = `code-${i}-${k}-${Math.random().toString(36).slice(2,8)}`;
+        const preAttrs = [
+          `id="${codeId}"`,
+          `class="code-window"`,
+          lang ? `data-lang="${lang}"` : "",
+          src ? `data-src="${src}"` : "",
+        ].filter(Boolean).join(" ");
+        const body = it.code
+          ? `<pre ${preAttrs}>${escapeHtml(String(it.code))}</pre>`
+          : `<pre ${preAttrs}>Loading script…</pre>`;
+        const actions = `
+          <div class="media-actions">
+            <button class="btn btn-copy-code" data-target="${codeId}">Copy</button>
+            ${src ? `<a class="btn" href="${src}" download>Download</a>` : ""}
+          </div>`;
+        return `<figure class="media">
+                  <figcaption class="media-caption">${label}</figcaption>
+                  ${body}
+                  ${actions}
+                </figure>`;
+      }).join("");
+      return section(el.label || "Script", content);
+    },
+
     image: (el, ctx, _i, page) => {
       const items = normalizeItems(el);
       let describedCount = 0; // alternate only across described images
@@ -229,6 +263,20 @@
     if (el.src) return [{ src: el.src, label: el.label }];
     return [];
   }
+  function guessLang(p) {
+    const s = String(p).toLowerCase();
+    if (s.endsWith('.py')) return 'python';
+    if (s.endsWith('.js') || s.endsWith('.mjs') || s.endsWith('.cjs')) return 'javascript';
+    if (s.endsWith('.ts')) return 'typescript';
+    if (s.endsWith('.cpp') || s.endsWith('.cc') || s.endsWith('.cxx')) return 'cpp';
+    if (s.endsWith('.c')) return 'c';
+    if (s.endsWith('.java')) return 'java';
+    if (s.endsWith('.json')) return 'json';
+    if (s.endsWith('.md')) return 'markdown';
+    if (s.endsWith('.html')) return 'html';
+    if (s.endsWith('.css')) return 'css';
+    return '';
+  }
   function normalizeType(t) { return String(t || "").toLowerCase().replace(/\s+/g, ""); }
   function isHttp(url) { return /^https?:\/\//i.test(url || ""); }
   function expandTemplatePath(p, page, ctx) {
@@ -252,6 +300,39 @@
     const expanded = expandTemplatePath(p, page, ctx).replace(/^\/+/, "");
     if (isHttp(expanded)) return expanded;
     return BASE + encodeLocalPath(expanded);
+  }
+  async function hydrateCodeBlocks(root) {
+    const list = Array.from(root.querySelectorAll('pre.code-window[data-src]'));
+    await Promise.all(list.map(async (pre) => {
+      const url = pre.getAttribute('data-src');
+      try {
+        const r = await fetch(url, { cache: 'no-store' });
+        pre.textContent = r.ok ? (await r.text()) : `Failed to load: ${url}`;
+      } catch (e) {
+        pre.textContent = `Error loading: ${url}`;
+      }
+    }));
+  }
+  function wireCodeActions(root) {
+    root.addEventListener('click', async (ev) => {
+      const btn = ev.target.closest('.btn-copy-code');
+      if (!btn) return;
+      const id = btn.getAttribute('data-target');
+      const pre = id && root.querySelector(`#${CSS.escape(id)}`);
+      if (!pre) return;
+      const text = pre.textContent || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = 'Copied!';
+      } catch {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+          btn.textContent = 'Copied!';
+        } catch {}
+      }
+      setTimeout(() => { btn.textContent = 'Copy'; }, 1200);
+    });
   }
   function toVideoEmbed(src) {
     const url = String(src || "");
