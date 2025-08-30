@@ -181,10 +181,26 @@
 
     image: (el, ctx, _i, page) => {
       const items = normalizeItems(el);
-      const content = items.map(it => {
+      let describedCount = 0; // alternate only across described images
+      const content = items.map((it) => {
         const src = makeSrc(it.src, page, ctx);
         const label = escapeHtml(it.label || "Image");
         const alt = escapeHtml(it.alt || it.label || page.title || "");
+        const desc = it.description ? String(it.description) : "";
+
+        if (desc) {
+          const alignLeft = (describedCount % 2) === 0; // alternate L/R
+          describedCount++;
+          const alignClass = alignLeft ? "align-left" : "align-right";
+          const img = `<img class="image-frame" src="${src}" alt="${alt}" loading="lazy">`;
+          const text = `<div class="image-desc">${richText(desc)}</div>`;
+          return `<figure class="media media-described ${alignClass}">
+                    <div class="media-wrap">${img}${text}</div>
+                    <figcaption class="media-caption">${label}</figcaption>
+                  </figure>`;
+        }
+
+        // no description: render as before
         const img = `<img class="image-frame" src="${src}" alt="${alt}" loading="lazy">`;
         return `<figure class="media">
                   <div class="media-center">${img}</div>

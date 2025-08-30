@@ -8,8 +8,14 @@
             "type": "Image",
             "items": [
                 {
-                    "label": "Start",
-                    "src": "resources/{class}/{type}/{title}/IMG_6133.JPG"
+                    "label": "PREVIOUSLY DONE...",
+                    "src": "resources/{class}/{type}/{title}/IMG_6133.JPG",
+                    "description": "During the last meeting on 8/26/25, we built this half of the drivetrain."
+                },
+                {
+                    "label": "MICAH PICTURE!",
+                    "src": "resources/{class}/{type}/{title}/IMG_6157.JPG",
+                    "description": "Devious picture that I caught of Micah."
                 }
             ]
         }
