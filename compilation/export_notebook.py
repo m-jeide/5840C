@@ -18,7 +18,7 @@ from urllib.parse import quote
 
 from bs4 import BeautifulSoup
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-from PIL import Image
+from PIL import Image, ImageOps
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PAGES_DIR = REPO_ROOT / "pages"
@@ -465,6 +465,7 @@ class AssetManager:
     try:
       with Image.open(source) as img:
         img.load()
+        img = ImageOps.exif_transpose(img)
         img = ensure_rgb(img)
         img.thumbnail((1600, 1200), RESAMPLE_FILTER)
         img.save(target, format="JPEG", quality=85, optimize=True)
@@ -589,6 +590,12 @@ def generate_pdf(html_path: Path, pdf_path: Path, log: logging.Logger) -> None:
 
   html_uri = html_path.resolve().as_uri()
   log.info("Generating PDF from %s", html_uri)
+  if pdf_path.exists():
+    try:
+      pdf_path.unlink()
+      log.debug("Removed existing PDF at %s before writing", pdf_path)
+    except OSError as exc:
+      raise RuntimeError(f"Unable to remove existing PDF at {pdf_path}: {exc}")
 
   with sync_playwright() as p:
     browser = p.chromium.launch()
