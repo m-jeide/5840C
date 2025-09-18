@@ -135,17 +135,18 @@
   const RENDERERS = {
     synopsis: (el) => {
       const text = el.content || el.text || "";
-      return section("Synopsis", `<div class="card">${richText(text)}</div>`);
+      const title = el.title || "Synopsis";
+      return section(title, `<div class="card">${richText(text)}</div>`);
     },
     designbrief: (el) => {
       if (Array.isArray(el.items)) {
         const blocks = el.items.map((txt) =>
           `<div class="card" style="margin-top:10px">${richText(txt)}</div>`).join("");
-        return section("Design Brief", blocks);
+        return section(el.title || "Design Brief", blocks);
       }
-      return section("Design Brief", `<div class="card">${richText(el.content || "")}</div>`);
+      return section(el.title || "Design Brief", `<div class="card">${richText(el.content || "")}</div>`);
     },
-    notes: (el) => section(el.label || "Notes", `<div class="card">${richText(el.content || "")}</div>`),
+    notes: (el) => section(el.title || el.label || "Notes", `<div class="card">${richText(el.content || "")}</div>`),
 
     pdf: (el, ctx, _i, page) => {
       const items = normalizeItems(el);
