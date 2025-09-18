@@ -449,7 +449,7 @@ class AssetManager:
       self._images_copied += 1
       self._total_original += source.stat().st_size
       self._total_output += target.stat().st_size if target.exists() else source.stat().st_size
-      href = encode_local_href(str(target.relative_to(REPO_ROOT)))
+      href = encode_local_href(target.relative_to(REPO_ROOT).as_posix())
       self._image_cache[source] = href
       return href
 
@@ -458,7 +458,7 @@ class AssetManager:
     target.parent.mkdir(parents=True, exist_ok=True)
 
     if target.exists() and target.stat().st_mtime >= source.stat().st_mtime:
-      href = encode_local_href(str(target.relative_to(REPO_ROOT)))
+      href = encode_local_href(target.relative_to(REPO_ROOT).as_posix())
       self._image_cache[source] = href
       return href
 
@@ -480,7 +480,7 @@ class AssetManager:
       self._total_original += source.stat().st_size
       self._total_output += target.stat().st_size if target.exists() else source.stat().st_size
 
-    href = encode_local_href(str(target.relative_to(REPO_ROOT)))
+    href = encode_local_href(target.relative_to(REPO_ROOT).as_posix())
     self._image_cache[source] = href
     return href
 
@@ -548,8 +548,9 @@ def is_http(value: str) -> bool:
   return value.lower().startswith("http://") or value.lower().startswith("https://")
 
 
-def encode_local_href(path: str) -> str:
-  segments = [quote(seg) if seg else "" for seg in path.split("/")]
+def encode_local_href(path: Any) -> str:
+  path_str = str(path).replace("\\", "/")
+  segments = [quote(seg) if seg else "" for seg in path_str.split("/")]
   return "/".join(segments)
 
 
