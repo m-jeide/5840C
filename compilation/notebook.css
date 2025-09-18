@@ -155,8 +155,8 @@ body {
   width: 100%;
   height: auto;
   max-height: 240px;
-  object-fit: contain;
-  background: #000;
+  object-fit: cover;
+  background: var(--card);
   border-radius: 12px;
   border: 1px solid var(--hair);
 }
