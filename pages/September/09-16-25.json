@@ -15,7 +15,7 @@
                 {
                     "label": "Completed Intake Prototype",
                     "src": "resources/{class}/{type}/{title}/IMG_6344.JPG",
-                    "description": "The finished prototype consisted of a chain-driven conveyor with standoffs attached as paddles to move blocks toward the launching wheels. The system was powered by a single motor mounted to the side and tested using the VEX brain's onboard controls."
+                    "description": "The finished prototype consisted of two chain-driven conveyors with standoffs attached as paddles to move blocks toward the launching wheels. The system was powered by a single motor mounted to the side and tested using the VEX brain's onboard controls."
                 }
             ]
         },
