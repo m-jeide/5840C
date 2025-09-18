@@ -68,6 +68,8 @@
         <div class="month-title">
           <h1>{{ month.name }}</h1>
         </div>
+      </section>
+      <section class="page month-page month-content" id="{{ month.anchor }}-content">
         {% for entry in month.entries %}
           <article class="entry" id="{{ entry.anchor }}">
             <header class="entry-header">
