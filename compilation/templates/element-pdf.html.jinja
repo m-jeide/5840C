@@ -1,7 +1,7 @@
 <section class="entry-element entry-pdf">
   <h3>{{ element.title }}</h3>
   <ul class="pdf-list">
-    {% for item in element.items %}
+    {% for item in element["items"] %}
       <li>
         <span class="pdf-label">{{ item.label }}</span>
         <a href="{{ item.src }}">{{ item.filename }}</a>
