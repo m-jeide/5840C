@@ -6,8 +6,10 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import logging
 import os
 import re
+import shutil
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -16,15 +18,20 @@ from urllib.parse import quote
 
 from bs4 import BeautifulSoup
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from PIL import Image
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PAGES_DIR = REPO_ROOT / "pages"
 TEMPLATE_DIR = Path(__file__).resolve().parent / "templates"
 DEFAULT_OUTPUT_DIR = REPO_ROOT / "compilation" / "output"
 VEX_LOGO_PATH = "resources/home/vex_logo.png"
+RESAMPLE_FILTER = Image.Resampling.LANCZOS if hasattr(Image, "Resampling") else Image.LANCZOS
 
 
 def main(argv: Optional[Iterable[str]] = None) -> int:
+  logging.basicConfig(level=os.environ.get("NOTEBOOK_LOG_LEVEL", "INFO"), format="[%(levelname)s] %(message)s")
+  log = logging.getLogger("notebook")
+
   parser = argparse.ArgumentParser(description=__doc__)
   parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_DIR,
                       help="Directory where notebook.html/pdf will be written (default: %(default)s)")
@@ -41,8 +48,9 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
     raise FileNotFoundError(f"Manifest not found at {manifest_path}")
 
   manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-  months = build_months(manifest)
-  home_content = extract_home_content(REPO_ROOT / "index.html")
+  assets = AssetManager(output_dir, log)
+  months = build_months(manifest, assets)
+  home_content = extract_home_content(REPO_ROOT / "index.html", assets)
 
   rel_to_root = os.path.relpath(REPO_ROOT, output_dir)
   base_href = "./" if rel_to_root == "." else f"{Path(rel_to_root).as_posix()}/"
@@ -54,6 +62,7 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
   template = env.get_template("notebook.html.jinja")
 
   toc = build_toc(months)
+  log.info("Rendering notebook: %d months, %d total entries", len(months), sum(len(m["entries"]) for m in months))
   html_text = template.render(
       meta={"title": "Team 5840C Engineering Notebook"},
       base_href=base_href,
@@ -65,20 +74,23 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
 
   html_path = (args.html_path.resolve() if args.html_path else output_dir / "notebook.html")
   html_path.write_text(html_text, encoding="utf-8")
+  log.info("Wrote HTML notebook to %s (%.1f KB)", html_path, html_path.stat().st_size / 1024)
+  assets.report()
 
   if not args.skip_pdf:
     pdf_path = (args.pdf_path.resolve() if args.pdf_path else output_dir / "notebook.pdf")
-    generate_pdf(html_path, pdf_path)
+    generate_pdf(html_path, pdf_path, log)
 
   return 0
 
 
-def build_months(manifest: Dict[str, Any]) -> List[Dict[str, Any]]:
+def build_months(manifest: Dict[str, Any], assets: "AssetManager") -> List[Dict[str, Any]]:
   months: List[Dict[str, Any]] = []
   for month_name, entries_meta in manifest.items():
+    entries_sorted = sorted(entries_meta, key=lambda meta: meta.get("date") or meta.get("id") or "")
     entry_objs: List[Dict[str, Any]] = []
-    for entry_meta in entries_meta:
-      entry = load_entry(month_name, entry_meta)
+    for entry_meta in entries_sorted:
+      entry = load_entry(month_name, entry_meta, assets)
       entry_objs.append(entry)
     months.append({
         "name": month_name,
@@ -106,18 +118,37 @@ def build_toc(months: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
   return toc
 
 
-def extract_home_content(index_path: Path) -> str:
+def extract_home_content(index_path: Path, assets: "AssetManager") -> str:
   html_text = index_path.read_text(encoding="utf-8")
   soup = BeautifulSoup(html_text, "html.parser")
   sections = []
   for selector in ("section#about", "section#links"):
     node = soup.select_one(selector)
     if node:
+      for img in node.select("img[src]"):
+        src = img.get("src")
+        if not src or is_http(src):
+          continue
+        normalized = src.lstrip("./")
+        fs_candidate = (index_path.parent / normalized).resolve()
+        if not fs_candidate.exists():
+          continue
+        try:
+          rel = fs_candidate.relative_to(REPO_ROOT)
+        except ValueError:
+          continue
+        resolved = ResolvedSrc(
+            href=encode_local_href(rel.as_posix()),
+            fs_path=fs_candidate,
+        )
+        new_src = assets.prepare_image(resolved)
+        if new_src:
+          img["src"] = new_src
       sections.append(node.decode())
   return "\n".join(sections)
 
 
-def load_entry(month_name: str, entry_meta: Dict[str, Any]) -> Dict[str, Any]:
+def load_entry(month_name: str, entry_meta: Dict[str, Any], assets: "AssetManager") -> Dict[str, Any]:
   entry_id = entry_meta.get("id")
   if not entry_id:
     raise ValueError(f"Entry in {month_name} missing 'id'")
@@ -128,10 +159,10 @@ def load_entry(month_name: str, entry_meta: Dict[str, Any]) -> Dict[str, Any]:
 
   data = json.loads(entry_path.read_text(encoding="utf-8"))
   ctx = {"cls": month_name, "id": entry_id}
-  return build_entry(data, ctx)
+  return build_entry(data, ctx, assets)
 
 
-def build_entry(page: Dict[str, Any], ctx: Dict[str, str]) -> Dict[str, Any]:
+def build_entry(page: Dict[str, Any], ctx: Dict[str, str], assets: "AssetManager") -> Dict[str, Any]:
   id_str = ctx["id"]
   file_base = strip_ext(Path(id_str).name)
 
@@ -147,7 +178,7 @@ def build_entry(page: Dict[str, Any], ctx: Dict[str, str]) -> Dict[str, Any]:
   elements = page.get("elements") if isinstance(page.get("elements"), list) else []
 
   processed_elements = [
-      process_element(el, page, ctx)
+      process_element(el, page, ctx, assets)
       for el in elements
   ]
 
@@ -163,7 +194,7 @@ def build_entry(page: Dict[str, Any], ctx: Dict[str, str]) -> Dict[str, Any]:
   }
 
 
-def process_element(el: Dict[str, Any], page: Dict[str, Any], ctx: Dict[str, str]) -> Optional[Dict[str, Any]]:
+def process_element(el: Dict[str, Any], page: Dict[str, Any], ctx: Dict[str, str], assets: "AssetManager") -> Optional[Dict[str, Any]]:
   normalized = normalize_type(el.get("type"))
 
   if normalized in {"", None}:
@@ -205,10 +236,13 @@ def process_element(el: Dict[str, Any], page: Dict[str, Any], ctx: Dict[str, str
       resolved = resolve_src(item.get("src"), page, ctx)
       if not resolved.href:
         continue
+      img_href = assets.prepare_image(resolved)
+      if not img_href:
+        continue
       items_data.append({
           "label": item.get("label") or "Image",
           "alt": item.get("alt") or item.get("label") or page.get("title") or ctx["id"],
-          "src": resolved.href,
+          "src": img_href,
           "description": rich_text(item.get("description")) if item.get("description") else "",
       })
     if not items_data:
@@ -361,6 +395,112 @@ class ResolvedSrc:
   fs_path: Optional[Path]
 
 
+def ensure_rgb(image: Image.Image) -> Image.Image:
+  if image.mode == "RGB":
+    return image
+  if image.mode in ("RGBA", "LA"):
+    background = Image.new("RGB", image.size, (255, 255, 255))
+    alpha = image.getchannel("A") if "A" in image.getbands() else image.split()[-1]
+    background.paste(image, mask=alpha)
+    return background
+  if image.mode == "P":
+    converted = image.convert("RGBA")
+    return ensure_rgb(converted)
+  return image.convert("RGB")
+
+
+class AssetManager:
+  def __init__(self, output_dir: Path, log: logging.Logger):
+    self.output_dir = output_dir
+    self.assets_dir = self.output_dir / "assets"
+    self.assets_dir.mkdir(parents=True, exist_ok=True)
+    self._image_cache: Dict[Path, str] = {}
+    self._log = log
+    self._total_original = 0
+    self._total_output = 0
+    self._images_processed = 0
+    self._images_copied = 0
+
+  def prepare_image(self, resolved: ResolvedSrc) -> str:
+    if not resolved.href:
+      return ""
+    if not resolved.fs_path or not resolved.fs_path.exists():
+      return resolved.href
+
+    source = resolved.fs_path.resolve()
+    cached = self._image_cache.get(source)
+    if cached:
+      return cached
+
+    try:
+      rel = source.relative_to(REPO_ROOT)
+    except ValueError:
+      return resolved.href
+
+    suffix = source.suffix.lower()
+    raster_exts = {".jpg", ".jpeg", ".png", ".bmp", ".gif", ".tif", ".tiff", ".webp"}
+
+    if suffix not in raster_exts:
+      target = self.assets_dir / rel
+      target.parent.mkdir(parents=True, exist_ok=True)
+      if not target.exists() or target.stat().st_mtime < source.stat().st_mtime:
+        shutil.copy2(source, target)
+        self._log.debug("Copied asset without resize: %s -> %s", source, target)
+      self._images_copied += 1
+      self._total_original += source.stat().st_size
+      self._total_output += target.stat().st_size if target.exists() else source.stat().st_size
+      href = encode_local_href(str(target.relative_to(REPO_ROOT)))
+      self._image_cache[source] = href
+      return href
+
+    target_rel = rel.with_suffix(".jpg")
+    target = self.assets_dir / target_rel
+    target.parent.mkdir(parents=True, exist_ok=True)
+
+    if target.exists() and target.stat().st_mtime >= source.stat().st_mtime:
+      href = encode_local_href(str(target.relative_to(REPO_ROOT)))
+      self._image_cache[source] = href
+      return href
+
+    try:
+      with Image.open(source) as img:
+        img.load()
+        img = ensure_rgb(img)
+        img.thumbnail((1600, 1200), RESAMPLE_FILTER)
+        img.save(target, format="JPEG", quality=85, optimize=True)
+        self._log.debug("Resized image %s -> %s (original %.1f KB, output %.1f KB)",
+                        source, target, source.stat().st_size/1024, target.stat().st_size/1024)
+        self._images_processed += 1
+        self._total_original += source.stat().st_size
+        self._total_output += target.stat().st_size
+    except Exception as exc:
+      self._log.warning("Failed to resize %s (%s); copying original", source, exc)
+      shutil.copy2(source, target)
+      self._images_copied += 1
+      self._total_original += source.stat().st_size
+      self._total_output += target.stat().st_size if target.exists() else source.stat().st_size
+
+    href = encode_local_href(str(target.relative_to(REPO_ROOT)))
+    self._image_cache[source] = href
+    return href
+
+  def report(self) -> None:
+    if self._images_processed or self._images_copied:
+      total_images = self._images_processed + self._images_copied
+      delta = self._total_original - self._total_output
+      self._log.info(
+          "Processed %d image assets (%d resized, %d copied). Original %.1f MB -> Output %.1f MB (saved %.1f MB)",
+          total_images,
+          self._images_processed,
+          self._images_copied,
+          self._total_original / (1024 * 1024),
+          self._total_output / (1024 * 1024),
+          delta / (1024 * 1024),
+      )
+    else:
+      self._log.info("No local image assets required processing.")
+
+
 def resolve_src(src: Any, page: Dict[str, Any], ctx: Dict[str, str]) -> ResolvedSrc:
   raw = expand_template_path(src, page, ctx)
   if not raw:
@@ -440,13 +580,14 @@ def first_truthy(*values: Any) -> Any:
   return ""
 
 
-def generate_pdf(html_path: Path, pdf_path: Path) -> None:
+def generate_pdf(html_path: Path, pdf_path: Path, log: logging.Logger) -> None:
   try:
     from playwright.sync_api import sync_playwright
   except ImportError as exc:
     raise RuntimeError("Playwright is not installed. Run 'pip install -r compilation/requirements.txt' and 'playwright install chromium'.") from exc
 
   html_uri = html_path.resolve().as_uri()
+  log.info("Generating PDF from %s", html_uri)
 
   with sync_playwright() as p:
     browser = p.chromium.launch()
@@ -454,6 +595,8 @@ def generate_pdf(html_path: Path, pdf_path: Path) -> None:
     page.goto(html_uri, wait_until="load")
     page.pdf(path=str(pdf_path), print_background=True, format="Letter", prefer_css_page_size=True)
     browser.close()
+  if pdf_path.exists():
+    log.info("Wrote PDF to %s (%.1f MB)", pdf_path, pdf_path.stat().st_size / (1024 * 1024))
 
 
 if __name__ == "__main__":
