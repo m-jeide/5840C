@@ -1,0 +1,16 @@
+<section class="entry-element entry-images">
+  <h3>{{ element.title }}</h3>
+  <div class="image-grid">
+    {% for item in element.items %}
+      <figure>
+        <img src="{{ item.src }}" alt="{{ item.alt }}">
+        <figcaption>
+          <span class="caption-title">{{ item.label }}</span>
+          {% if item.description %}
+            <div class="caption-desc">{{ item.description | safe }}</div>
+          {% endif %}
+        </figcaption>
+      </figure>
+    {% endfor %}
+  </div>
+</section>

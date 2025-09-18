@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ meta.title }}</title>
+  <base href="{{ base_href }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="compilation/notebook.css">
+</head>
+<body>
+  <article class="notebook">
+    <section class="page title-page" id="title-page">
+      <div class="title-content">
+        <h1>ENGINEERING NOTEBOOK</h1>
+        <h2>TEAM 5840C</h2>
+        <p class="season">2025–2026</p>
+        <p class="game">PUSH BACK</p>
+        <img src="{{ vex_logo }}" alt="VEX Robotics logo" class="title-logo">
+      </div>
+    </section>
+
+    <section class="page toc-page" id="table-of-contents">
+      <h1>Table of Contents</h1>
+      <ol class="toc-list">
+        {% for item in toc %}
+          <li>
+            <a href="#{{ item.anchor }}">{{ item.title }}</a>
+            {% if item.children %}
+              <ol>
+                {% for child in item.children %}
+                  <li><a href="#{{ child.anchor }}">{{ child.title }}</a></li>
+                {% endfor %}
+              </ol>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    <section class="page home-page" id="home">
+      <h1 class="section-title">Home</h1>
+      <div class="home-content">
+        {{ home_content | safe }}
+      </div>
+    </section>
+
+    {% for month in months %}
+      <section class="page month-page" id="{{ month.anchor }}">
+        <h1 class="section-title">{{ month.name }}</h1>
+        {% for entry in month.entries %}
+          <article class="entry" id="{{ entry.anchor }}">
+            <header class="entry-header">
+              <h2>{{ entry.title }}</h2>
+              {% if entry.date or entry.type %}
+                <div class="entry-meta">
+                  {% if entry.date %}<span>{{ entry.date }}</span>{% endif %}
+                  {% if entry.date and entry.type %}<span aria-hidden="true">·</span>{% endif %}
+                  {% if entry.type %}<span>{{ entry.type }}</span>{% endif %}
+                </div>
+              {% endif %}
+            </header>
+
+            {% if entry.brief %}
+              <section class="entry-brief">
+                <h3>Abstract</h3>
+                <ul>
+                  {% for item in entry.brief %}
+                    <li>{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </section>
+            {% endif %}
+
+            {% for element in entry.elements %}
+              {% include "element-" + element.template + ".html.jinja" %}
+            {% endfor %}
+          </article>
+        {% endfor %}
+      </section>
+    {% endfor %}
+  </article>
+</body>
+</html>

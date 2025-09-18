@@ -1,6 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "build:manifest": "node scripts/build-manifest.mjs"
+    "build:manifest": "node scripts/build-manifest.mjs",
+    "notebook:html": "python3 compilation/export_notebook.py --skip-pdf",
+    "notebook:pdf": "python3 compilation/export_notebook.py"
   }
 }

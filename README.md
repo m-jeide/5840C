@@ -7,3 +7,22 @@ This was a problem because my previous portfolio hosted by Google Sites relied o
 
 Migrating the data from my personal to school account would not only be slow, if I were to forget to migrate the data back from my school to personal account before I graduate, my school account will be terminated, and all data would be lost. This was the original reason for the data to be hosted on my personal account, so I wouldn't lose my data/work when I graduated.
 
+## Notebook Compilation
+
+The `compilation/` tooling builds a printable engineering notebook that includes the title page, table of contents, home page, and every entry:
+
+1. Install Python dependencies and Playwright (only needs to be done once per machine):
+   ```bash
+   python3 -m pip install --upgrade pip
+   python3 -m pip install -r compilation/requirements.txt
+   python3 -m playwright install chromium
+   ```
+2. Generate the HTML + PDF locally:
+   ```bash
+   npm run notebook:pdf
+   ```
+   Use `npm run notebook:html` to skip the PDF step while iterating.
+
+Outputs land in `compilation/output/notebook.html` and `compilation/output/notebook.pdf`.
+
+A companion GitHub Action `Export Notebook` is available under the *Actions* tab for manual runs. It publishes the same HTML/PDF as build artifacts so reviewers can download the latest export without running the tooling locally.

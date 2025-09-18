@@ -1,0 +1,11 @@
+<section class="entry-element entry-video">
+  <h3>{{ element.title }}</h3>
+  <ul class="video-list">
+    {% for item in element.items %}
+      <li>
+        <span class="video-label">{{ item.label }}</span>
+        <a href="{{ item.src }}">{{ item.src }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
