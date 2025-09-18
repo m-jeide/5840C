@@ -11,6 +11,7 @@ import os
 import re
 import shutil
 import sys
+from datetime import datetime
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
@@ -64,7 +65,10 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
   toc = build_toc(months)
   log.info("Rendering notebook: %d months, %d total entries", len(months), sum(len(m["entries"]) for m in months))
   html_text = template.render(
-      meta={"title": "Team 5840C Engineering Notebook"},
+      meta={
+          "title": "Team 5840C Engineering Notebook",
+          "generated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+      },
       base_href=base_href,
       vex_logo=encode_local_href(VEX_LOGO_PATH),
       home_content=home_content,
@@ -103,6 +107,7 @@ def build_months(manifest: Dict[str, Any], assets: "AssetManager") -> List[Dict[
 def build_toc(months: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
   toc = [
       {"title": "Title Page", "anchor": "title-page", "children": []},
+      {"title": "Compilation Notes", "anchor": "compile-note", "children": []},
       {"title": "Table of Contents", "anchor": "table-of-contents", "children": []},
       {"title": "Home", "anchor": "home", "children": []},
   ]

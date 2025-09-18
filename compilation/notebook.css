@@ -12,7 +12,7 @@
 
 @page {
   size: Letter;
-  margin: 0.75in;
+  margin: 0.6in;
 }
 
 body {
@@ -130,6 +130,20 @@ body {
 .home-content {
   display: grid;
   gap: 24px;
+}
+
+.home-page .member-grid,
+.home-page .member-card {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.home-page .member-grid {
+  gap: 16px;
+}
+
+.home-page .member-card {
+  margin-bottom: 4px;
 }
 
 .entry {
@@ -295,4 +309,38 @@ body {
   .image-grid figure {
     page-break-inside: avoid;
   }
+}
+.compile-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.75in 0.5in;
+}
+
+.compile-content {
+  max-width: 600px;
+  display: grid;
+  gap: 16px;
+}
+
+.compile-content h1 {
+  margin: 0;
+  font-size: 30px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.compile-content p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.compile-content a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.compile-content a:hover {
+  text-decoration: underline;
 }
