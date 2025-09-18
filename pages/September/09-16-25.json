@@ -1,0 +1,28 @@
+{
+    "title": "{file}",
+    "date": "09/16/25",
+    "type": "Entry",
+    "brief": ["Completed a functioning prototype of our intake system."],
+    "elements": [
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "Construction of the Intake Prototype",
+                    "src": "resources/{class}/{type}/{title}/IMG_6338.JPG",
+                    "description": "Micah and Varun continued work on the intake prototype, the design consisted of a chain-driven conveyor with standoffs mounted along the links to act as paddles. These paddles were intended to index and carry blocks upward toward the launching wheels, which would then accelerate the objects onto a scoring ramp. The images show the ongoing construction process and assembly of the conveyor system."
+                },
+                {
+                    "label": "Completed Intake Prototype",
+                    "src": "resources/{class}/{type}/{title}/IMG_6344.JPG",
+                    "description": "The finished prototype consisted of a chain-driven conveyor with standoffs attached as paddles to move blocks toward the launching wheels. The system was powered by a single motor mounted to the side and tested using the VEX brain's onboard controls."
+                }
+            ]
+        },
+        {
+            "type": "Synopsis",
+            "title": "Prototype Testing and Findings; Considerations for Improvement",
+            "content": "During testing, we observed that at higher motor speeds the standoffs experienced stress and occasionally jammed against the blocks, locking the conveyor. In some cases, this stress damaged the standoffs or risked them falling off entirely. At lower speeds, jamming still occurred but less frequently, and most blocks were moved successfully. We are currently deciding whether to attempt correction through programming (if possible) or to pursue a mechanical redesign. An additional consideration is optimizing between stability and speed to reduce standoff damage while maintaining effective block movement."
+        }
+    ]
+}
