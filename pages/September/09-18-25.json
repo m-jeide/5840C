@@ -1,0 +1,40 @@
+{
+    "title": "{file}",
+    "date": "09/18/25",
+    "type": "Entry",
+    "brief": [
+        "Created a new iteration of our intake prototype."
+    ],
+    "elements": [
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "Deconstruction of the Previous Intake Prototype and Beginning of New Intake Prototype Iteration",
+                    "src": "resources/{class}/{type}/{title}/IMG_6363.JPG",
+                    "description": "Micah deconstructed the previous intake prototype in place for a new iteration. The previous prototype had issues with jamming and standoff damage, prompting a redesign."
+                },
+                {
+                    "label": "MICAH PICTURE!",
+                    "src": "resources/{class}/{type}/{title}/IMG_6359.JPG",
+                    "description": "Another devious picture that I caught of Micah."
+                },
+                {
+                    "label": "Finished Intake Prototype",
+                    "src": "resources/{class}/{type}/{title}/IMG_6367.JPG",
+                    "description": "The new intake prototype transitions from a conveyor-style design to a roller-based intake. The previous conveyor system suffered from jamming and standoff damage, especially at high speeds when belt slack caused collisions between standoffs. The new roller design eliminates belts entirely, instead using paired rollers to guide and intake blocks more reliably."
+                }
+            ]
+        },
+        {
+            "type": "Synopsis",
+            "title": "Intake System Testing and Launcher Brainstorming",
+            "content": "During this practice, the team successfully tested the new roller intake prototype, which showed far fewer jams and less passive stress on the standoffs compared to the earlier conveyor-based design. The roller setup provided smoother intake and more reliable performance. At the same time, Matthew and Omri were fully engaged in brainstorming launcher concepts, dedicating the session to exploring potential designs and mechanisms for future development."
+        },
+        {
+            "type": "Synopsis",
+            "title": "Short N' Sweet: Incoming Members",
+            "content": "Several students are considering joining the robotics club, and with 5840C currently being the smallest of the four teams, we are excited for the high chance that new members will be assigned to us!"
+        }
+    ]
+}
