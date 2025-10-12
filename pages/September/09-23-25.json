@@ -1,0 +1,32 @@
+{
+    "title": "{file}",
+    "date": "09/23/25",
+    "type": "Entry",
+    "brief": [
+        "Disassembled the roller-based intake from the previous meeting to move forward with a new design.",
+        "Began prototyping a flywheel launching mechanism, building directly onto the existing drivetrain.",
+        "Work focused on determining the optimal placement and spacing for the flywheel assembly to effectively propel scoring objects."
+    ],
+    "elements": [
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "Deconstruction of the Previous Intake Prototype and Beginning of New Intake Prototype Iteration",
+                    "src": "resources/{class}/{type}/{title}/IMG_6440.JPG",
+                    "description": "To begin, we fully deconstructed the roller intake from the September 18th meeting. This left us with the bare drivetrain, providing a clean slate to build a new flywheel launcher concept."
+                },
+                {
+                    "label": "Flywheel Prototype",
+                    "src": "resources/{class}/{type}/{title}/IMG_6446.JPG",
+                    "description": "The primary motivation for this complete redesign was the height of our previous roller intake, which proved incapable of pulling scoring objects out from the game's loaders. To solve this, we pivoted to a more compact flywheel design. By the end of the meeting, we had successfully mounted the VEX Flex Wheels for the new prototype. This system is intended to grip objects directly from the loader and accelerate them for scoring. The photo shows the initial placement we settled on, which will serve as the baseline for our first round of testing."
+                }
+            ]
+        },
+        {
+            "type": "Synopsis",
+            "title": "Team Update: New Members",
+            "content": "During this time, several new members were still being onboarded and assigned to the club's various teams. While the core team focused on the flywheel prototype, the prospective members were observing and assisting with minor tasks to get familiar with the VEX system. They will be properly introduced in an upcoming entry."
+        }
+    ]
+}
