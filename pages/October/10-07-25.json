@@ -1,0 +1,53 @@
+{
+    "title": "{file}",
+    "date": "10/07/25",
+    "type": "Entry",
+    "brief": [
+        "With a competition on the 18th, the team began construction of the secondary scoring system.",
+        "Formal lead designer roles were assigned: Aiden for the scoring system and Micah for the intake/drivetrain.",
+        "Welcomed new member Michael to the team.",
+        "Jayden was assigned to shadow Matthew in programming to build team depth."
+    ],
+    "elements": [
+        {
+            "type": "Synopsis",
+            "title": "Countdown to Competition: Defining Roles",
+            "content": "With our first competition scheduled for October 18th, we've kicked into high gear. To streamline our workflow, we have formally designated lead designer roles. Aiden will be the lead designer for the new secondary scoring system, while Micah will continue to lead design on the intake and drivetrain. This division of labor will allow for parallel development and faster iteration as we push to be competition-ready."
+        },
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "Framework for the Scoring System",
+                    "src": "resources/{class}/{type}/{title}/IMG_6648.JPG",
+                    "description": "Work began immediately on the new scoring system. The image shows the initial vertical framework being built directly onto the chassis. This structure will eventually house the mechanism that deposits scoring objects into the goals."
+                },
+                {
+                    "label": "Team Build in Progress",
+                    "src": "resources/{class}/{type}/{title}/IMG_6650.JPG",
+                    "description": "Multiple team members work together to assemble the new structure and begin routing wires. This collaborative effort is essential to meet our deadline for the upcoming competition."
+                }
+            ]
+        },
+        {
+            "type": "Synopsis",
+            "title": "Growing the Team: Welcome Michael & Programming Plans",
+            "content": "We're excited to welcome our newest member, Michael, who joins us just in time for the pre-competition push! On the software side, Jayden has officially been assigned to shadow Matthew to build up the programming team's depth. Additionally, our mentor, Guzman, has requested that Matthew lead a basic coding tutorial for members of other teams, which is tentatively planned for October 14th."
+        },
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "Aiden, Lead Designer (Scoring System)",
+                    "src": "resources/{class}/{type}/{title}/IMG_6654.JPG",
+                    "description": "Aiden, now leading the design for the new scoring mechanism."
+                },
+                {
+                    "label": "New Member Michael",
+                    "src": "resources/{class}/{type}/{title}/IMG_6656.JPG",
+                    "description": "Our newest member, Michael, joining the team during a busy build week."
+                }
+            ]
+        }
+    ]
+}
