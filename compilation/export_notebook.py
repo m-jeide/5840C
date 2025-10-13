@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import calendar
 import html
 import json
 import logging
@@ -27,6 +28,14 @@ TEMPLATE_DIR = Path(__file__).resolve().parent / "templates"
 DEFAULT_OUTPUT_DIR = REPO_ROOT / "compilation" / "output"
 VEX_LOGO_PATH = "resources/home/vex_logo.png"
 RESAMPLE_FILTER = Image.Resampling.LANCZOS if hasattr(Image, "Resampling") else Image.LANCZOS
+
+MONTH_NAME_TO_INDEX = {
+    name.lower(): idx
+    for idx, name in enumerate(calendar.month_name)
+    if name
+}
+DATE_FORMATS = ("%m/%d/%y", "%m/%d/%Y", "%Y-%m-%d")
+YEAR_REGEX = re.compile(r"(?:19|20)\\d{2}")
 
 
 def main(argv: Optional[Iterable[str]] = None) -> int:
@@ -88,20 +97,63 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
   return 0
 
 
+def _parse_entry_date(value: Optional[str]) -> Optional[datetime]:
+  if not value:
+    return None
+  for fmt in DATE_FORMATS:
+    try:
+      return datetime.strptime(value, fmt)
+    except ValueError:
+      continue
+  return None
+
+
+def _extract_month_index(name: str) -> Optional[int]:
+  for token in re.findall(r"[A-Za-z]+", name or ""):
+    idx = MONTH_NAME_TO_INDEX.get(token.lower())
+    if idx:
+      return idx
+  return None
+
+
+def _extract_year_from_name(name: str) -> Optional[int]:
+  if not name:
+    return None
+  match = YEAR_REGEX.search(name)
+  if match:
+    return int(match.group(0))
+  return None
+
+
+def _derive_month_sort_key(name: str, entries: List[Dict[str, Any]]) -> tuple:
+  parsed_dates = sorted(filter(None, (_parse_entry_date(entry.get("date")) for entry in entries)))
+  if parsed_dates:
+    earliest = parsed_dates[0]
+    return (earliest.year, earliest.month, earliest.day)
+  month_idx = _extract_month_index(name)
+  if month_idx is not None:
+    year = _extract_year_from_name(name) or 0
+    return (year, month_idx, 0)
+  # Unknown month names retain a deterministic but trailing order.
+  return (sys.maxsize, sys.maxsize, name.lower())
+
+
 def build_months(manifest: Dict[str, Any], assets: "AssetManager") -> List[Dict[str, Any]]:
-  months: List[Dict[str, Any]] = []
+  months_with_keys = []
   for month_name, entries_meta in manifest.items():
     entries_sorted = sorted(entries_meta, key=lambda meta: meta.get("date") or meta.get("id") or "")
     entry_objs: List[Dict[str, Any]] = []
     for entry_meta in entries_sorted:
       entry = load_entry(month_name, entry_meta, assets)
       entry_objs.append(entry)
-    months.append({
+    sort_key = _derive_month_sort_key(month_name, entry_objs)
+    months_with_keys.append((sort_key, {
         "name": month_name,
         "anchor": slugify(month_name),
         "entries": entry_objs,
-    })
-  return months
+    }))
+  months_with_keys.sort(key=lambda item: item[0])
+  return [month for _, month in months_with_keys]
 
 
 def build_toc(months: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
