@@ -89,32 +89,63 @@ body { margin:0; background:var(--bg); color:var(--text); font:18px/1.6 system-u
 }
 .team-text { flex: 1 1 260px; min-width: 240px; }
 .team-text p { margin: 0; }
-.member-grid {
+.member-list { display: flex; flex-direction: column; gap: 38px; }
+.member {
   display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: minmax(180px, 240px) minmax(240px, 1fr);
+  align-items: center;
+  gap: 32px;
 }
-.member-card {
-  background: var(--card);
-  border: 1px solid var(--hair);
-  border-radius: 16px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  box-shadow: 0 10px 28px var(--ring);
-}
+.member-left .member-photo { order: 0; }
+.member-left .member-body { order: 1; }
+.member-right .member-photo { order: 1; }
+.member-right .member-body { order: 0; }
 .member-photo {
   width: 100%;
-  height: 220px;
+  max-width: 240px;
+  height: clamp(200px, 28vw, 260px);
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 18px;
   border: 1px solid var(--hair);
+  box-shadow: 0 10px 28px var(--ring);
 }
-.member-info { display: flex; flex-direction: column; gap: 6px; }
-.member-name { margin: 0; font-size: 20px; font-weight: 700; }
-.member-role { margin: 0; color: var(--muted); font-size: 15px; font-weight: 600; letter-spacing: 0.01em; }
-.member-desc { margin: 0; font-size: 15px; color: var(--text); }
+.member-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.member-header { display: flex; flex-direction: column; gap: 4px; }
+.member-name {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 40px);
+  letter-spacing: -.02em;
+  font-weight: 800;
+}
+.member-role {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(15px, 2vw, 18px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.member-quote {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(16px, 2.2vw, 18px);
+  line-height: 1.55;
+  font-style: italic;
+  border-left: 4px solid rgba(110,231,255,.45);
+  padding-left: 16px;
+}
+@media (max-width: 760px) {
+  .member {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .member-photo { margin: 0 auto; }
+  .member-quote { border-left: none; border-top: 4px solid rgba(110,231,255,.45); padding-left: 0; padding-top: 16px; }
+}
 @media (max-width: 700px) {
   .team-photo { flex: 1 1 100%; }
 }
