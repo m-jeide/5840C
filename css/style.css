@@ -91,15 +91,13 @@ body { margin:0; background:var(--bg); color:var(--text); font:18px/1.6 system-u
 .team-text p { margin: 0; }
 .member-list { display: flex; flex-direction: column; gap: 38px; }
 .member {
-  display: grid;
-  grid-template-columns: minmax(180px, 240px) minmax(240px, 1fr);
+  display: flex;
   align-items: center;
   gap: 32px;
+  width: 100%;
 }
-.member-left .member-photo { order: 0; }
-.member-left .member-body { order: 1; }
-.member-right .member-photo { order: 1; }
-.member-right .member-body { order: 0; }
+.member-left { flex-direction: row; justify-content: flex-start; }
+.member-right { flex-direction: row-reverse; justify-content: flex-end; }
 .member-photo {
   width: 100%;
   max-width: 240px;
@@ -113,6 +111,7 @@ body { margin:0; background:var(--bg); color:var(--text); font:18px/1.6 system-u
   display: flex;
   flex-direction: column;
   gap: 12px;
+  max-width: min(520px, 70%);
 }
 .member-header { display: flex; flex-direction: column; gap: 4px; }
 .member-name {
@@ -138,13 +137,31 @@ body { margin:0; background:var(--bg); color:var(--text); font:18px/1.6 system-u
   border-left: 4px solid rgba(110,231,255,.45);
   padding-left: 16px;
 }
+.member-right .member-body { align-items: flex-end; text-align: right; }
+.member-right .member-role { align-self: flex-end; }
+.member-right .member-quote {
+  border-left: none;
+  border-right: 4px solid rgba(110,231,255,.45);
+  padding-left: 0;
+  padding-right: 16px;
+  text-align: right;
+}
 @media (max-width: 760px) {
   .member {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
   }
+  .member-right .member-body,
+  .member-left .member-body { align-items: center; text-align: center; }
   .member-photo { margin: 0 auto; }
-  .member-quote { border-left: none; border-top: 4px solid rgba(110,231,255,.45); padding-left: 0; padding-top: 16px; }
+  .member-quote {
+    border-left: none;
+    border-right: none;
+    border-top: 4px solid rgba(110,231,255,.45);
+    padding: 16px 0 0;
+    text-align: center;
+  }
 }
 @media (max-width: 700px) {
   .team-photo { flex: 1 1 100%; }
