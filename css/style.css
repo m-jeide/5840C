@@ -95,9 +95,10 @@ body { margin:0; background:var(--bg); color:var(--text); font:18px/1.6 system-u
   align-items: center;
   gap: 32px;
   width: 100%;
+  justify-content: flex-start;
 }
-.member-left { flex-direction: row; justify-content: flex-start; }
-.member-right { flex-direction: row-reverse; justify-content: flex-end; }
+.member-left { flex-direction: row; }
+.member-right { flex-direction: row-reverse; }
 .member-photo {
   width: 100%;
   max-width: 240px;
@@ -111,7 +112,8 @@ body { margin:0; background:var(--bg); color:var(--text); font:18px/1.6 system-u
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-width: min(520px, 70%);
+  flex: 1 1 420px;
+  max-width: 560px;
 }
 .member-header { display: flex; flex-direction: column; gap: 4px; }
 .member-name {
