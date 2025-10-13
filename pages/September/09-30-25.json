@@ -1,0 +1,48 @@
+{
+    "title": "{file}",
+    "date": "09/30/25",
+    "type": "Entry",
+    "brief": [
+        "Conducted a strategic review of the flywheel prototype and identified its limitations as a primary scoring mechanism.",
+        "Redefined the flywheel's role to be collection and storage of scoring objects.",
+        "Determined the necessity of a second, dedicated scoring system to be designed in upcoming meetings.",
+        "Welcomed our newest team member, Aiden!"
+    ],
+    "elements": [
+        {
+            "type": "Synopsis",
+            "title": "Redefining Roles: A New Two-System Strategy",
+            "content": "This meeting marked a major strategic pivot. After analyzing the geometry of the field and the goals, we concluded that our flywheel mechanism, while effective for intake, is not viable for scoring. Its angle and position make it unable to deposit objects effectively. Therefore, we have redefined the robot's architecture: the flywheel will now be a dedicated collection and storage system. Our primary design focus moving forward will be the creation of a completely separate, secondary mechanism dedicated solely to scoring."
+        },
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "Analyzing Mechanism Limitations",
+                    "src": "resources/{class}/{type}/{title}/IMG_6586.JPG",
+                    "description": "The main activity of the meeting was this hands-on analysis. By manually placing a scoring object on the robot and aligning it with a goal, we visually confirmed the flywheel's inability to score. This simple test was the catalyst for our decision to pursue a two-system design, as it clearly demonstrated the need for a different mechanism to handle the final step of scoring."
+                },
+                {
+                    "label": "MICAH PICTURE!",
+                    "src": "resources/{class}/{type}/{title}/IMG_6594.JPG",
+                    "description": "A wild Micah appears during the strategy pivot."
+                }
+            ]
+        },
+        {
+            "type": "Synopsis",
+            "title": "And Another One! Welcome Aiden",
+            "content": "The team continues to grow! This week we welcomed our newest member, Aiden. He's jumping in at a great time as we start to define our robot's core strategy for the season."
+        },
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "New Member Aiden",
+                    "src": "resources/{class}/{type}/{title}/IMG_6592.JPG",
+                    "description": "Aiden getting familiar with the team and the current robot build. (We'll get a better picture soon, I promise)"
+                }
+            ]
+        }
+    ]
+}
