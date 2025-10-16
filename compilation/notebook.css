@@ -16,19 +16,20 @@
 }
 
 @page {
-  @bottom-center {
-    content: "Continues on next page";
-    font: 11px/1.4 "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  @bottom-right {
+    content: "CONTINUES ON NEXT PAGE";
+    font: 10px/1.4 "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    letter-spacing: 0.12em;
     color: var(--muted);
   }
 }
 
 @page:first {
-  @bottom-center { content: normal; }
+  @bottom-right { content: normal; }
 }
 
 @page:last {
-  @bottom-center { content: normal; }
+  @bottom-right { content: normal; }
 }
 
 body {

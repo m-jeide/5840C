@@ -1,5 +1,8 @@
 <section class="entry-element entry-images">
-  <h3>{{ element.title }}</h3>
+  {% set title = (element.title or '') | trim %}
+  {% if title and title | lower != 'images' %}
+    <h3>{{ title }}</h3>
+  {% endif %}
   <div class="image-grid">
     {% for item in element["items"] %}
       <figure>
