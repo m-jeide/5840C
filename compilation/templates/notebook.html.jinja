@@ -71,40 +71,67 @@
       </section>
       <section class="page month-page month-content" id="{{ month.anchor }}-content">
         {% for entry in month.entries %}
-          {% set lede_element = entry.elements[0] if entry.elements and entry.elements[0].template == 'text' else None %}
-          {% set remaining_elements = entry.elements[1:] if lede_element else entry.elements %}
           <article class="entry" id="{{ entry.anchor }}">
-            <div class="entry-lede">
-              <header class="entry-header">
-                <h2>{{ entry.title }}</h2>
-                {% if entry.date or entry.type %}
-                  <div class="entry-meta">
-                    {% if entry.date %}<span>{{ entry.date }}</span>{% endif %}
-                    {% if entry.date and entry.type %}<span aria-hidden="true">·</span>{% endif %}
-                    {% if entry.type %}<span>{{ entry.type }}</span>{% endif %}
-                  </div>
+            {% if entry.elements and entry.elements[0].template == 'text' %}
+              <div class="entry-lede">
+                <header class="entry-header">
+                  <h2>{{ entry.title }}</h2>
+                  {% if entry.date or entry.type %}
+                    <div class="entry-meta">
+                      {% if entry.date %}<span>{{ entry.date }}</span>{% endif %}
+                      {% if entry.date and entry.type %}<span aria-hidden="true">·</span>{% endif %}
+                      {% if entry.type %}<span>{{ entry.type }}</span>{% endif %}
+                    </div>
+                  {% endif %}
+                </header>
+
+                {% if entry.brief %}
+                  <section class="entry-brief">
+                    <h3>Abstract</h3>
+                    <ul>
+                      {% for item in entry.brief %}
+                        <li>{{ item }}</li>
+                      {% endfor %}
+                    </ul>
+                  </section>
                 {% endif %}
-              </header>
 
-              {% if entry.brief %}
-                <section class="entry-brief">
-                  <h3>Abstract</h3>
-                  <ul>
-                    {% for item in entry.brief %}
-                      <li>{{ item }}</li>
-                    {% endfor %}
-                  </ul>
-                </section>
-              {% endif %}
+                {% set element = entry.elements[0] %}
+                {% include "element-" + element.template + ".html.jinja" %}
+              </div>
 
-              {% if lede_element %}
-                {% include "element-" + lede_element.template + ".html.jinja" with context, element=lede_element %}
-              {% endif %}
-            </div>
+              {% for element in entry.elements[1:] %}
+                {% include "element-" + element.template + ".html.jinja" %}
+              {% endfor %}
+            {% else %}
+              <div class="entry-lede">
+                <header class="entry-header">
+                  <h2>{{ entry.title }}</h2>
+                  {% if entry.date or entry.type %}
+                    <div class="entry-meta">
+                      {% if entry.date %}<span>{{ entry.date }}</span>{% endif %}
+                      {% if entry.date and entry.type %}<span aria-hidden="true">·</span>{% endif %}
+                      {% if entry.type %}<span>{{ entry.type }}</span>{% endif %}
+                    </div>
+                  {% endif %}
+                </header>
 
-            {% for element in remaining_elements %}
-              {% include "element-" + element.template + ".html.jinja" %}
-            {% endfor %}
+                {% if entry.brief %}
+                  <section class="entry-brief">
+                    <h3>Abstract</h3>
+                    <ul>
+                      {% for item in entry.brief %}
+                        <li>{{ item }}</li>
+                      {% endfor %}
+                    </ul>
+                  </section>
+                {% endif %}
+              </div>
+
+              {% for element in entry.elements %}
+                {% include "element-" + element.template + ".html.jinja" %}
+              {% endfor %}
+            {% endif %}
           </article>
         {% endfor %}
       </section>
