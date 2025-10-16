@@ -208,11 +208,15 @@ body {
   margin: 18px 0;
 }
 
-.entry-element.entry-images,
 .entry-element.entry-pdf,
 .entry-element.entry-video {
   page-break-inside: avoid;
   break-inside: avoid;
+}
+
+.entry-body p {
+  orphans: 2;
+  widows: 2;
 }
 
 .entry-element h3 {
@@ -249,6 +253,8 @@ body {
   flex-direction: column;
   gap: 10px;
   align-items: center;
+  page-break-inside: avoid;
+  break-inside: avoid;
 }
 
 .image-grid img {
