@@ -277,50 +277,53 @@ body {
   background: var(--card);
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 16px;
+  gap: 20px;
+  padding: 14px 18px;
   page-break-inside: avoid;
   break-inside: avoid;
 }
 
 .image-card img {
-  width: clamp(160px, 42%, 260px);
-  max-height: 280px;
+  width: clamp(140px, 34%, 200px);
+  max-height: 210px;
   object-fit: cover;
   border-radius: 12px;
   border: 1px solid var(--hair);
-  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.15);
 }
 
 .image-card figcaption {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  flex: 1 1 300px;
+  gap: 8px;
+  flex: 1 1 240px;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .image-card-left {
   flex-direction: row;
-  text-align: left;
-}
-
-.image-card-left figcaption {
-  align-items: flex-start;
 }
 
 .image-card-right {
   flex-direction: row-reverse;
-  text-align: right;
-}
-
-.image-card-right figcaption {
-  align-items: flex-end;
 }
 
 .caption-title {
-  font-weight: 700;
+  font-weight: 800;
   display: block;
   letter-spacing: 0.04em;
+}
+
+.image-card-left .caption-title {
+  text-align: right;
+}
+
+.image-card-right .caption-title {
+  text-align: left;
+}
+
+.image-card figcaption .caption-desc {
+  text-align: center;
 }
 
 .caption-desc p {
@@ -332,15 +335,18 @@ body {
   .image-card-right,
   .image-card-left {
     flex-direction: column !important;
-    text-align: center;
     gap: 16px;
   }
   .image-card figcaption {
     align-items: center;
   }
+  .image-card-left .caption-title,
+  .image-card-right .caption-title {
+    text-align: center;
+  }
   .image-card img {
     width: 100%;
-    max-height: 320px;
+    max-height: 240px;
   }
 }
 
