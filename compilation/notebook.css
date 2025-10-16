@@ -15,6 +15,22 @@
   margin: 0.6in;
 }
 
+@page {
+  @bottom-center {
+    content: "Continues on next page";
+    font: 11px/1.4 "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    color: var(--muted);
+  }
+}
+
+@page:first {
+  @bottom-center { content: normal; }
+}
+
+@page:last {
+  @bottom-center { content: normal; }
+}
+
 body {
   background: var(--page-bg);
   color: var(--page-text);
