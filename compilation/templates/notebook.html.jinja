@@ -98,7 +98,7 @@
               {% endif %}
 
               {% if lede_element %}
-                {% include "element-" + lede_element.template + ".html.jinja" with context %}
+                {% include "element-" + lede_element.template + ".html.jinja" with context, element=lede_element %}
               {% endif %}
             </div>
 
