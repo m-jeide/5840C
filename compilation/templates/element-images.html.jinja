@@ -3,9 +3,10 @@
   {% if title and title | lower != 'images' %}
     <h3>{{ title }}</h3>
   {% endif %}
-  <div class="image-grid">
+  <div class="image-stack">
     {% for item in element["items"] %}
-      <figure>
+      {% set alignment = 'image-card-left' if loop.index0 % 2 == 0 else 'image-card-right' %}
+      <figure class="image-card {{ alignment }}">
         <img src="{{ item.src }}" alt="{{ item.alt }}">
         <figcaption>
           <span class="caption-title">{{ item.label }}</span>

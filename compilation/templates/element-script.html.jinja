@@ -1,5 +1,8 @@
 <section class="entry-element entry-script">
-  <h3>{{ element.title }}</h3>
+  {% set title = (element.title or '') | trim %}
+  {% if title and title | lower != 'script' %}
+    <h3>{{ title }}</h3>
+  {% endif %}
   {% for item in element["items"] %}
     <article class="code-block">
       <header>
