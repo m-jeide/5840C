@@ -175,6 +175,11 @@ body {
   break-after: avoid;
 }
 
+.entry-header + * {
+  page-break-before: avoid;
+  break-before: avoid;
+}
+
 .entry-meta {
   display: flex;
   flex-wrap: wrap;
