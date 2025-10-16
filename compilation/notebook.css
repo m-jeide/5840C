@@ -137,18 +137,13 @@ body {
   gap: 24px;
 }
 
-.home-page .member-grid,
+.home-page .member-list {
+  gap: 24px;
+}
+
 .home-page .member-card {
-  break-inside: avoid;
   page-break-inside: avoid;
-}
-
-.home-page .member-grid {
-  gap: 16px;
-}
-
-.home-page .member-card {
-  margin-bottom: 4px;
+  break-inside: avoid;
 }
 
 .home-page .member-photo {
@@ -173,6 +168,11 @@ body {
 .entry-header h2 {
   font-size: 24px;
   margin: 0 0 6px;
+}
+
+.entry-header {
+  page-break-after: avoid;
+  break-after: avoid;
 }
 
 .entry-meta {
@@ -206,6 +206,13 @@ body {
 
 .entry-element {
   margin: 18px 0;
+}
+
+.entry-element.entry-images,
+.entry-element.entry-pdf,
+.entry-element.entry-video {
+  page-break-inside: avoid;
+  break-inside: avoid;
 }
 
 .entry-element h3 {

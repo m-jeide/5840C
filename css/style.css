@@ -90,6 +90,12 @@ body { margin:0; background:var(--bg); color:var(--text); font:18px/1.6 system-u
 .team-text { flex: 1 1 260px; min-width: 240px; }
 .team-text p { margin: 0; }
 .member-list { display: flex; flex-direction: column; gap: 38px; }
+.member-card {
+  width: 100%;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.member-card > .member { width: 100%; }
 .member {
   display: flex;
   align-items: center;
