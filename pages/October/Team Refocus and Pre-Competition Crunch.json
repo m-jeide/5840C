@@ -1,0 +1,37 @@
+{
+    "title": "{file}",
+    "date": "10/14/25",
+    "type": "Entry",
+    "brief": [
+        "Per our instructor's decision, the team was restructured to a core competition roster of five members to improve focus and engagement.",
+        "The consolidated team now consists of Matthew, Micah, Omri, Aiden, and Varun.",
+        "With the competition only days away, the team rushed to fully assemble the chain-driven block lifting system, with Aiden leading the design."
+    ],
+    "elements": [
+        {
+            "type": "Synopsis",
+            "title": "A Necessary Refocus: Team Consolidation",
+            "content": "To address challenges with our growing team size and to ensure every member was actively engaged, our instructor made the decision to restructure the team. 5840C will now proceed with a core competition roster of five members: Matthew Jeide, Micah Ramunni, Omri Lavi, Aiden, and Varun Pais. The members moved from our roster have formed a new, non-competing team; they will shadow us and the other teams during this weekend's competition to continue learning the process."
+        },
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "Scoring System Framework",
+                    "src": "resources/{class}/{type}/{title}/IMG_0135.JPG",
+                    "description": "With the competition this Saturday, our top priority is building the secondary scoring mechanism. The day started with constructing the core structural frame for the lift system."
+                },
+                {
+                    "label": "Focused Collaboration",
+                    "src": "resources/{class}/{type}/{title}/IMG_0136.JPG",
+                    "description": "The new team structure allowed for closer collaboration. Aiden, Micah, and Omri are seen here working through the design of the lift's gear train and structural supports."
+                },
+                {
+                    "label": "Lift Assembled by End of Day",
+                    "src": "resources/{class}/{type}/{title}/IMG_0163.JPG",
+                    "description": "By the end of the meeting, we had made a massive push and fully assembled the chain-driven lift. The photo shows the completed carriage, sprockets, and chain runs. The mechanism is now mechanically complete, leaving only wiring and programming before it's ready for testing."
+                }
+            ]
+        }
+    ]
+}

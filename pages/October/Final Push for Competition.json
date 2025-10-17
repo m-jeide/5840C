@@ -1,0 +1,62 @@
+{
+    "title": "{file}",
+    "date": "10/16/25",
+    "type": "Entry",
+    "brief": [
+        "Made a major push on final mechanical assembly and wiring in preparation for Saturday's competition.",
+        "Developed the first version of our competition driver control script, which is properly commented and structured.",
+        "The new code includes refined arcade drive controls and functions for operating the intake/flywheel motor."
+    ],
+    "elements": [
+        {
+            "type": "Synopsis",
+            "title": "The Pre-Competition Scramble",
+            "content": "With the competition just days away, today's meeting was a scramble to get the robot as functional as possible. On the mechanical side, the team focused on critical assembly, reinforcing the new lift, and tackling the complex wiring. In parallel, the first version of our competition code was written and tested, marking a major step towards integrating all systems."
+        },
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "Multitasking Under Pressure",
+                    "src": "resources/{class}/{type}/{title}/IMG_0200(1).JPG",
+                    "description": "A perfect example of our pre-competition workflow: Omri and Micah work on the lift's gear train while Aiden takes a moment to write his long-overdue bio for the engineering notebook."
+                },
+                {
+                    "label": "State at End of Day",
+                    "src": "resources/{class}/{type}/{title}/IMG_0205(1).JPG",
+                    "description": "This is the state we managed to get the robot to by the end of the meeting. The lift is mechanically assembled, but much of the wiring still needs to be finalized and managed before it's competition-ready."
+                },
+                {
+                    "label": "Devious Micah Picture",
+                    "src": "resources/{class}/{type}/{title}/IMG_0201.JPG",
+                    "description": "Micah peeking from behind a field element."
+                }
+            ]
+        },
+        {
+            "type": "Script",
+            "items": [
+                {
+                    "label": "Competition Code V1",
+                    "src": "resources/{class}/{type}/{title}/main.py",
+                    "language": "python"
+                }
+            ]
+        },
+        {
+            "type": "Synopsis",
+            "title": "About the Competition Script",
+            "content": "This is our first structured script intended for competition. It is organized with clear functions and comments. Key features include a modular arcade drive function (`command_move`) and button callbacks that allow the driver to start (Button A) and stop (Button B) the intake flywheel motor. It also includes a basic autonomous routine that drives forward for two seconds as a starting point for skills."
+        },
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "SIDNEY!",
+                    "src": "resources/{class}/{type}/{title}/IMG_0185.JPG",
+                    "description": "This is our friend Sidney, who's from another 5840 team, who was also working hard on her team's robot before the competition."
+                }
+            ]
+        }
+    ]
+}
