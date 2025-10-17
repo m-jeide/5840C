@@ -1,0 +1,26 @@
+{
+    "title": "{file}",
+    "date": "09/04/25",
+    "type": "Entry",
+    "brief": [
+        "Upgraded the drivetrain to V2 by expanding its width for greater stability and to make room for a future intake system.",
+        "Took official portraits of the current team members for the notebook."
+    ],
+    "elements": [
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "Drivetrain V2",
+                    "src": "resources/{class}/{type}/{title}/IMG_6251.JPG",
+                    "description": "Following our initial drive tests, we implemented our first major design iteration. We expanded the width of the drivetrain to improve its stability during turns and to create the necessary space to accommodate an intake system, which is our next design priority."
+                }
+            ]
+        },
+        {
+            "type": "Synopsis",
+            "title": "Team Photos",
+            "content": "We took a moment to get official portraits of our current members: Matthew Jeide, Micah Ramunni, Omri Lavi, and Varun Pais. These will be used for the 'Meet the Team' section of our engineering notebook and online portfolio."
+        }
+    ]
+}

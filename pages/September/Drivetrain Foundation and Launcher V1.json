@@ -1,0 +1,27 @@
+{
+    "title": "{file}",
+    "date": "09/09/25",
+    "type": "Entry",
+    "brief": [
+        "With the V2 drivetrain chassis stable, work began on adding the necessary framework for an intake.",
+        "In parallel, the rest of the team began designing and prototyping a flywheel-style launching mechanism.",
+        "The launcher prototype was not completed, but the initial concept and parts layout were established."
+    ],
+    "elements": [
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "Building the Intake Foundation",
+                    "src": "resources/{class}/{type}/{title}/IMG_6305.JPG",
+                    "description": "Micah continued the development of the drivetrain by building up the structural supports that will form the foundation for our first intake system prototype."
+                },
+                {
+                    "label": "Launcher Prototype V1",
+                    "src": "resources/{class}/{type}/{title}/IMG_6304.JPG",
+                    "description": "As work continued on the chassis, Matthew, Varun, and Omri began prototyping a separate launching mechanism. The initial concept was a flywheel-style system using high-traction VEX Flex Wheels and a gear train to achieve a high launch velocity. The goal was to test if this design could propel scoring objects with enough force to travel up a ramp. The prototype was not fully assembled by the end of the meeting."
+                }
+            ]
+        }
+    ]
+}
