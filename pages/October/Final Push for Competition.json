@@ -18,12 +18,12 @@
             "items": [
                 {
                     "label": "Multitasking Under Pressure",
-                    "src": "resources/{class}/{type}/{title}/IMG_0200(1).JPG",
+                    "src": "resources/{class}/{type}/{title}/IMG_0200.JPG",
                     "description": "A perfect example of our pre-competition workflow: Omri and Micah work on the lift's gear train while Aiden takes a moment to write his long-overdue bio for the engineering notebook."
                 },
                 {
                     "label": "State at End of Day",
-                    "src": "resources/{class}/{type}/{title}/IMG_0205(1).JPG",
+                    "src": "resources/{class}/{type}/{title}/IMG_0205.JPG",
                     "description": "This is the state we managed to get the robot to by the end of the meeting. The lift is mechanically assembled, but much of the wiring still needs to be finalized and managed before it's competition-ready."
                 },
                 {
