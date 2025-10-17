@@ -1,0 +1,47 @@
+{
+    "title": "{file}",
+    "date": "08/28/25",
+    "type": "Entry",
+    "brief": [
+        "Completed the assembly of our Version 1 drivetrain prototype, connecting both halves and ensuring structural stability.",
+        "Adapted last year's code into a temporary arcade drive script to test the basic mobility of the new build.",
+        "Successfully conducted the first drive test of the season, confirming all motors and electronics were operational ahead of planned design revisions."
+    ],
+    "elements": [
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "Completing the Drivetrain Assembly",
+                    "src": "resources/{class}/{type}/{title}/IMG_6151.JPG",
+                    "description": "The team worked diligently to assemble the second half of the drivetrain and connect it to the first, creating the complete chassis for our new robot."
+                },
+                {
+                    "label": "Version 1 Prototype Complete",
+                    "src": "resources/{class}/{type}/{title}/IMG_6157.JPG",
+                    "description": "By the end of the meeting, the drivetrain was fully assembled, wired, and ready for its first run. We successfully tested its movement on the floor using a basic controller script."
+                },
+                {
+                    "label": "MICAH PICTURE!",
+                    "src": "resources/{class}/{type}/{title}/IMG_6149.JPG",
+                    "description": "The first of many devious Micah pictures this season."
+                }
+            ]
+        },
+        {
+            "type": "Script",
+            "items": [
+                {
+                    "label": "Initial Drive Test Script",
+                    "src": "resources/{class}/{type}/{title}/main.py",
+                    "language": "python"
+                }
+            ]
+        },
+        {
+            "type": "Synopsis",
+            "title": "About the Drive Script",
+            "content": "To get the prototype moving, Matthew adapted our code from last season. This temporary script is a heavily modified and stripped-down version of our old arcade-style controls, mangled down to the bare essentials needed to test basic mobility. It normalizes the joystick inputs and maps them to the left and right motors, allowing for intuitive control during our initial run."
+        }
+    ]
+}
