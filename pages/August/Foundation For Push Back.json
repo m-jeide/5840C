@@ -1,0 +1,32 @@
+{
+    "title": "{file}",
+    "date": "08/26/25",
+    "type": "Entry",
+    "brief": [
+        "Addressed a critical build-quality issue by disassembling a post-season drivetrain that failed at a competition last year due to the use of keps nuts instead of nylocks.",
+        "Began construction on a new, more robust drivetrain specifically designed by Micah to navigate this year's parking zone barrier.",
+        "Completed one half of the new drivetrain by the end of the meeting."
+    ],
+    "elements": [
+        {
+            "type": "Image",
+            "items": [
+                {
+                    "label": "Learning from Failure: Disassembling the Old Drive",
+                    "src": "resources/{class}/{type}/{title}/IMG_6135.JPG",
+                    "description": "Our first task of the season was to tear down a drivetrain built after last year's competition. A critical flaw in its construction—the use of keps nuts ('butterflies') instead of more secure nylock nuts—caused the entire frame to fall in on itself during a match. We are salvaging the parts to ensure our new build is far more reliable."
+                },
+                {
+                    "label": "A Purpose-Built Drivetrain",
+                    "src": "resources/{class}/{type}/{title}/IMG_6132.JPG",
+                    "description": "With the lessons from last season in mind, Micah, our drivetrain lead, designed the new base. The structure is being built to provide more clearance, which we anticipate will make it much easier to drive over the parking zone barrier, a key challenge in this year's game."
+                },
+                {
+                    "label": "Finished Half",
+                    "src": "resources/{class}/{type}/{title}/IMG_6133.JPG",
+                    "description": "The result of our first meeting: one completed half of the new drivetrain. The build quality is already a significant improvement, using nylock nuts throughout to ensure structural integrity under competition stress."
+                }
+            ]
+        }
+    ]
+}
