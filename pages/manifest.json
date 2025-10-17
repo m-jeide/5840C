@@ -15,8 +15,20 @@
   ],
   "October": [
     {
-      "id": "10-07-25",
-      "title": "10-07-25",
+      "id": "Final Push for Competition",
+      "title": "Final Push for Competition",
+      "type": "Entry",
+      "date": "10/16/25"
+    },
+    {
+      "id": "Team Refocus and Pre-Competition Crunch",
+      "title": "Team Refocus and Pre-Competition Crunch",
+      "type": "Entry",
+      "date": "10/14/25"
+    },
+    {
+      "id": "Scoring System V1 and Team Organization",
+      "title": "Scoring System V1 and Team Organization",
       "type": "Entry",
       "date": "10/07/25"
     }
