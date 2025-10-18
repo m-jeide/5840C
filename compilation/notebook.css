@@ -174,12 +174,14 @@ body {
 }
 
 .entry {
-  page-break-before: always;
   padding-top: 0.3in;
+  border-top: 2px solid var(--hair);
+  margin-top: 0.3in;
 }
 
 .entry:first-of-type {
-  page-break-before: avoid;
+  border-top: none;
+  margin-top: 0;
 }
 
 .entry-lede {
