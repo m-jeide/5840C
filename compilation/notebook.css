@@ -177,6 +177,8 @@ body {
   padding-top: 0.3in;
   border-top: 2px solid var(--hair);
   margin-top: 0.3in;
+  page-break-before: auto;
+  page-break-inside: auto;
 }
 
 .entry:first-of-type {
@@ -184,9 +186,12 @@ body {
   margin-top: 0;
 }
 
+/* Keep the header + abstract + first element together */
 .entry-lede {
   page-break-inside: avoid;
   break-inside: avoid;
+  page-break-after: avoid;
+  break-after: avoid;
 }
 
 .entry-header h2 {
@@ -235,8 +240,11 @@ body {
 
 .entry-element {
   margin: 18px 0;
+  page-break-inside: auto;
+  break-inside: auto;
 }
 
+/* Keep smaller elements together */
 .entry-element.entry-pdf,
 .entry-element.entry-video {
   page-break-inside: avoid;
@@ -244,8 +252,8 @@ body {
 }
 
 .entry-body p {
-  orphans: 2;
-  widows: 2;
+  orphans: 3;
+  widows: 3;
 }
 
 .entry-element h3 {
