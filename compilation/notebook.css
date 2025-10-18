@@ -412,9 +412,6 @@ body {
   body {
     background: transparent;
   }
-  .entry {
-    page-break-inside: avoid;
-  }
   .image-grid figure {
     page-break-inside: avoid;
   }
