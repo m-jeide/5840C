@@ -178,29 +178,12 @@ body {
   page-break-inside: auto;
 }
 
-/* Add divider between entries */
 .entry:not(:first-of-type) {
-  position: relative;
   padding-top: 0.3in;
   margin-top: 0.3in;
 }
 
-.entry:not(:first-of-type)::before {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--hair);
-  margin-top: -0.3in;
-  /* Hide divider if it would appear at top of page */
-  page-break-before: avoid;
-}
-
 .entry:first-of-type {
-  border-top: none;
   padding-top: 0;
   margin-top: 0;
 }
