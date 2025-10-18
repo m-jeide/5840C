@@ -174,15 +174,34 @@ body {
 }
 
 .entry {
-  padding-top: 0.3in;
-  border-top: 2px solid var(--hair);
-  margin-top: 0.3in;
   page-break-before: auto;
   page-break-inside: auto;
 }
 
+/* Add divider between entries */
+.entry:not(:first-of-type) {
+  position: relative;
+  padding-top: 0.3in;
+  margin-top: 0.3in;
+}
+
+.entry:not(:first-of-type)::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--hair);
+  margin-top: -0.3in;
+  /* Hide divider if it would appear at top of page */
+  page-break-before: avoid;
+}
+
 .entry:first-of-type {
   border-top: none;
+  padding-top: 0;
   margin-top: 0;
 }
 
@@ -259,6 +278,18 @@ body {
 .entry-element h3 {
   margin: 0 0 10px;
   font-size: 18px;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+
+/* Require at least 5 lines of content with the section header */
+.entry-element h3 + * {
+  orphans: 5;
+}
+
+.entry-body {
+  orphans: 5;
+  widows: 4;
 }
 
 .entry-body p {
